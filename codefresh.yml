@@ -8,7 +8,7 @@ steps:
     title: Cloning main repository...
     stage: prepare
     type: git-clone
-    repo: 'codefreshdemo/cf-example-python-django'
+    repo: 'harishkalyanpur/cf-example-python-django'
     revision: master
     git: github
   build_my_image:
@@ -19,9 +19,17 @@ steps:
     working_directory: ./
     tag: master
     dockerfile: Dockerfile
+  push_to_my_registry:
+    stage: 'build'
+    type: push
+    title: Pushing to a registry
+    candidate: ${{build_my_image}}
+    tag: 'v1.0.0'
+    registry: dockerhub
+    image_name: harishkalyanpur/my-django-image
   test_my_image:
      title: Running unit tests
      stage: test
      image: '${{build_my_image}}'
      commands:
-       - python -m unittest composeexample.utils     
+       - python -m unittest composeexample.utils
