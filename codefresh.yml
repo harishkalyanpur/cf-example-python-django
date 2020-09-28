@@ -19,6 +19,7 @@ steps:
     working_directory: ./
     tag: master
     dockerfile: Dockerfile
+    disable_push: true
   push_to_my_registry:
     stage: 'build'
     type: push
